@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Organigramma gara di orienteering</title>
+<style>
+:root{--bg:#f6f7f4;--card:#fff;--tx:#1d2420;--mut:#66706a;--line:#dde2dc;--ac:#1f7a4d;--acx:#fff;--warn:#b3261e;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#141815;--card:#1d231f;--tx:#e8ece8;--mut:#98a39b;--line:#323b35;--ac:#4cc48a;--acx:#0d1a12;--warn:#ff8a80}}
+:root[data-theme="dark"]{--bg:#141815;--card:#1d231f;--tx:#e8ece8;--mut:#98a39b;--line:#323b35;--ac:#4cc48a;--acx:#0d1a12;--warn:#ff8a80}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:1000px;margin:0 auto;padding:16px}
+h1{font-size:20px;margin:0 0 4px}.sub{color:var(--mut);margin:0 0 14px;font-size:13px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+button,input{font:inherit;color:inherit}
+button{border:1px solid var(--line);background:var(--card);padding:7px 12px;border-radius:8px;cursor:pointer}
+button.on,button.pri{background:var(--ac);color:var(--acx);border-color:var(--ac)}
+button.x{color:var(--warn)}
+input{border:1px solid var(--line);background:var(--bg);border-radius:6px;padding:6px 8px;min-width:0;width:100%}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px;margin-bottom:12px;border-left:6px solid var(--c)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;align-items:end}
+label{font-size:12px;color:var(--mut);display:block;margin-bottom:2px}
+.row{display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:6px;margin-top:6px}
+.badge{font-size:12px;color:var(--mut)}
+.hd{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px}
+.bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.scroll{overflow-x:auto;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px}
+.tl{min-width:760px}
+.tr{display:grid;grid-template-columns:150px 1fr;gap:8px;align-items:center;margin-bottom:6px}
+.nm{font-size:13px;overflow:hidden}.nm small{display:block;color:var(--mut)}
+.trk{position:relative;height:30px;border-left:1px solid var(--line);border-right:1px solid var(--line);background-image:linear-gradient(to right,var(--line) 1px,transparent 1px);background-size:calc(100%/var(--n)) 100%}
+.seg{position:absolute;top:3px;height:24px;border-radius:5px;color:#fff;font-size:11px;padding:3px 5px;overflow:hidden;white-space:nowrap;text-shadow:0 0 2px rgba(0,0,0,.5)}
+.ax{display:grid;grid-template-columns:150px 1fr;gap:8px;margin-bottom:4px}
+.ticks{position:relative;height:16px;font-size:11px;color:var(--mut)}.ticks span{position:absolute;transform:translateX(-50%)}
+.warn{color:var(--warn);font-weight:600}
+.leg{display:flex;gap:12px;flex-wrap:wrap;margin-top:10px;font-size:12px}.leg i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:4px}
+.empty{color:var(--mut);padding:20px;text-align:center}
+.orow{display:grid;grid-template-columns:1fr 140px 40px;gap:6px;margin-top:6px}
+.prow{display:grid;grid-template-columns:1.1fr 1.3fr auto;gap:8px;align-items:center;margin-top:8px}
+.prow small{display:block;color:var(--mut)}
+.ob{display:flex;gap:8px;align-items:baseline;padding:4px 0;border-top:1px solid var(--line);font-size:13px}.ob i{width:9px;height:9px;border-radius:50%;flex:none}
+.done{text-decoration:line-through;color:var(--mut)}
+@media(max-width:600px){.orow,.prow{grid-template-columns:1fr}}
+.frow{display:grid;grid-template-columns:repeat(auto-fit,minmax(125px,1fr));gap:4px 8px;align-items:end;margin-top:10px;padding-top:8px;border-top:1px solid var(--line)}
+.frow .w{grid-column:span 2}.frow .v{padding:6px 0}
+.cal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px;margin-bottom:12px}
+.wd{font-size:11px;color:var(--mut);text-align:center}
+.cd{min-height:56px;padding:4px;text-align:left;display:flex;flex-direction:column;justify-content:space-between;border-radius:8px;font-size:13px}
+.cd.fu{background:color-mix(in srgb,var(--ac) 20%,var(--card));border-color:var(--ac)}
+.cd.td{outline:2px solid var(--tx);outline-offset:-2px}
+.cd.sel{box-shadow:0 0 0 2px var(--ac)}
+.cd .ds{display:flex;gap:3px;flex-wrap:wrap;font-size:10px;color:var(--mut)}.cd .ds i{width:8px;height:8px;border-radius:50%}
+.cd.pa{opacity:.75}
+.cd.dl{background:color-mix(in srgb,#e5484d 18%,var(--card));border-color:#e5484d88}
+.cd.du{background:#e5484d;border-color:#e5484d;color:#fff}.cd.du .ds{color:#fff}.cd.du .ds i{box-shadow:0 0 0 1px #fff}
+.tree{--ln:var(--mut);display:flex;flex-direction:column;align-items:center;min-width:max-content;padding:6px 10px}
+.trow,.srow{display:flex;justify-content:center;gap:10px}.srow{gap:0}
+.bx{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:6px 10px;text-align:center;min-width:130px;max-width:180px;font-size:13px}
+.bx small{display:block;color:var(--mut);font-size:11px}
+.bx.top{background:var(--ac);color:var(--acx);border-color:var(--ac);min-width:150px}.bx.top small{color:inherit;opacity:.85}
+.bx.em{border-style:dashed;color:var(--mut)}
+.stem{width:2px;height:22px;background:var(--ln)}
+.col{position:relative;padding:22px 6px 0;display:flex;flex-direction:column;align-items:center}
+.col::before,.col::after{content:'';position:absolute;top:0;width:50%;height:22px}
+.col::before{right:50%;border-top:2px solid var(--ln)}
+.col::after{left:50%;border-top:2px solid var(--ln);border-left:2px solid var(--ln)}
+.col:first-child::before{border:0}.col:last-child::before{border-right:2px solid var(--ln)}.col:last-child::after{border:0}
+.col:only-child::before{border:0}.col:only-child::after{border-top:0;border-left:2px solid var(--ln)}
+.sw{display:flex;flex-direction:column;align-items:center}.sw::before{content:'';width:2px;height:8px;background:var(--ln)}
+button[disabled]{opacity:.35;cursor:default}
+.tg{border:0;background:transparent;padding:2px 6px;cursor:pointer;font-size:14px}
+.tb td,.tb th{vertical-align:top;padding:6px 8px 6px 0;text-align:left}.tb tr+tr td{border-top:1px solid var(--line)}.tb th{color:var(--mut);font-weight:500}
+#toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(16px + env(safe-area-inset-bottom,0px));background:var(--tx);color:var(--bg);padding:10px 14px;border-radius:10px;font-size:14px;display:none;max-width:90%;z-index:9}
+.ovr{background:color-mix(in srgb,#e5484d 14%,transparent)}.cmp{background:color-mix(in srgb,var(--ac) 16%,transparent)}
+.frow.ovr,.frow.cmp{padding:8px 6px;border-radius:8px}.ob.ovr,.ob.cmp{padding:4px 6px;border-radius:6px}
+</style>
+</head>
+<body>
+<main>
+<h1>Organigramma gara di orienteering</h1>
+<p class="sub" id="sub">Per ogni fase (Pre Evento, Giorno 1, Giorno 2): definisci i gruppi, assegna le persone, guarda il diagramma orario. Il Riepilogo mostra il carico di ogni persona su tutta la manifestazione. I dati restano salvati in questo browser.</p>
+<div class="bar" id="genbar"><button class="pri" data-act="gen">Crea copia di sola lettura</button></div>
+<div id="genout"></div>
+<input type="file" id="jf" accept=".json,.txt" style="display:none">
+<div id="toast"></div>
+<div class="tabs" id="tabs"></div>
+<div id="app"></div>
+</main>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script id="appjs">
+var ROD=document.getElementById('roData'),RO=!!ROD;var K='orienteering-org-v1',PAL=['#1f7a4d','#c2410c','#2563eb','#9333ea','#b45309','#0e7490','#be123c','#4d7c0f','#7c3aed','#475569'];
+var PH=['Pre Evento','Giorno 1','Giorno 2'],S=migr(load()),tab='s',ph=0;
+function migr(o){if(o&&o.phases)return fixP(o);var r={phases:PH.map(function(n){return{name:n,groups:[]}})};if(o&&o.groups)r.phases[1].groups=o.groups;return fixP(r)}
+function ali(n){n=(n||'').trim();var k=n.toLowerCase(),P=S.pool||[];for(var i=0;i<P.length;i++){if(P[i].alias&&ppl(P[i].alias).some(function(a){return a.toLowerCase()==k}))return P[i].name}return n}
+function nk(k){return String(k).toLowerCase().replace(/\s+/g,' ').trim().replace(/giorno\s*(\d)/,'giorno $1')}
+function procRows(rows){var n=0;S.stage=S.stage||[];S.pool=S.pool||[];rows.forEach(function(row){var o={};Object.keys(row).forEach(function(k){o[nk(k)]=String(row[k]).trim()});
+var full=((o['nome']||'')+' '+(o['cognome']||'')).trim();if(!full)return;
+var r={name:full,alias:'',phone:o['numero di telefono']||o['telefono']||o['cellulare']||'',email:o['email']||o['e-mail']||'',n1:/^no$/i.test(o['giorno 1']||''),n2:/^no$/i.test(o['giorno 2']||'')};
+var ex=S.pool.filter(function(q){return q.name.toLowerCase()==full.toLowerCase()})[0];if(ex)r.alias=ex.alias||'';
+var d=S.stage.filter(function(q){return q.name.toLowerCase()==full.toLowerCase()})[0];if(d){r.alias=d.alias||r.alias;S.stage[S.stage.indexOf(d)]=r}else S.stage.push(r);n++});
+save();return n}
+function impRow(r){S.pool=S.pool||[];var ex=S.pool.filter(function(q){return q.name.toLowerCase()==r.name.toLowerCase()})[0];
+if(ex){ex.n1=r.n1;ex.n2=r.n2;if(r.phone)ex.phone=r.phone;if(r.email)ex.email=r.email;if((r.alias||'').trim())ex.alias=r.alias.trim()}
+else S.pool.push({name:r.name,note:'',phone:r.phone||'',email:r.email||'',n1:!!r.n1,n2:!!r.n2,alias:(r.alias||'').trim()})}
+function impX(f){if(!f)return;if(!window.XLSX){toast('Libreria Excel non caricata: controlla la connessione.');return}
+var r=new FileReader();r.onload=function(ev){var res;try{var wb=XLSX.read(ev.target.result,{type:'array'});res=procRows(XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]],{defval:''}))}catch(e){toast('Impossibile leggere il file.');return}
+render()};r.readAsArrayBuffer(f)}
+function sh(n){n=(n||'').trim();if(!n)return'';var k=n.toLowerCase(),P=S.pool||[];for(var i=0;i<P.length;i++){var q=P[i],A=ppl(q.alias||'');if(q.name.toLowerCase()==k||A.some(function(a){return a.toLowerCase()==k}))return A[0]||n}return n}
+var MSG='',NT='',CF='',EX={},EDT={};
+function toast(t){var e=document.getElementById('toast');if(!e)return;e.textContent=t;e.style.display='block';clearTimeout(toast.t);toast.t=setTimeout(function(){e.style.display='none'},6000)}
+async function expData(){var txt=JSON.stringify(S),box=document.getElementById('genout');
+try{var d=window.claude&&await claude.use('downloads');if(d){await d.save({filename:'organigramma-gara-dati.json',data:txt});toast('Dati esportati. Per ripristinarli usa «Importa dati» e scegli questo file.');return}}catch(e){if(e&&e.code=='declined')return}
+box.innerHTML='<div class="card" style="--c:var(--ac)"><b>Dati esportati</b><p class="sub">Il salvataggio diretto non è disponibile: copia tutto il testo qui sotto in un file di testo chiamato <b>organigramma-dati.json</b>. Per ripristinarlo usa «Importa dati» e scegli quel file.</p><textarea readonly style="width:100%;height:140px;font:12px monospace" onfocus="this.select()">'+esc(txt)+'</textarea></div>'}
+function impJ(f){if(!f)return;var r=new FileReader();r.onload=function(ev){try{var n=migr(JSON.parse(ev.target.result));if(!n.phases||n.phases.length!=3)throw 0;S=n;save();render();toast('Dati importati.')}catch(e){toast('File non valido: scegli un file esportato con «Esporta dati».')}};r.readAsText(f)}
+function cpyG(m){var from=ph==1?2:1,src=S.phases[from].groups,dst=G(),add=0,skip=0;
+src.forEach(function(g){var k=gk(g);if(k&&dst.some(function(x){return gk(x)==k})){skip++;return}
+var c=JSON.parse(JSON.stringify(g));
+if(m!='p'){c.leader='';c.ls='';c.le='';c.slots=(c.slots||[]).map(function(){return{name:'',start:'',end:''}})}
+dst.push(c);add++});
+NT=src.length?'Copiati '+add+' settori da '+PH[from]+(skip?' ('+skip+' già presenti, non toccati)':'')+(m=='p'?', con responsabili e persone.':', senza responsabili e persone.'):'Non ci sono settori in '+PH[from]+' da copiare.'}
+function renameRefs(o,n){var ko=o.toLowerCase();function fx(v){return(v||'').trim().toLowerCase()==ko?n:v}
+S.phases.forEach(function(P){P.groups.forEach(function(g){g.leader=fx(g.leader);(g.slots||[]).forEach(function(x){x.name=fx(x.name)});(g.obj||[]).forEach(function(b){b.r=fx(b.r);var T=ppl(b.p);if(T.some(function(z){return z.toLowerCase()==ko}))b.p=T.map(fx).join(', ')})})});
+if(S.top)['dg','dt','pr'].forEach(function(k){S.top[k]=fx(S.top[k])})}
+function commitName(t){var q=(S.pool||[])[+t.dataset.pi];if(!q)return;var nv=t.value.trim();if(nv==q.name)return;
+if(!nv){t.value=q.name;return}
+if(S.pool.some(function(z){return z!==q&&z.name.toLowerCase()==nv.toLowerCase()})){MSG='Esiste già una persona chiamata «'+nv+'»: il nome non è stato modificato.';t.value=q.name;return}
+var old=q.name,ko=old.toLowerCase(),kn=nv.toLowerCase();q.name=nv;renameRefs(old,nv);
+if(('r:'+ko) in EX){EX['r:'+kn]=EX['r:'+ko];delete EX['r:'+ko]}if(ko in EDT){EDT[kn]=EDT[ko];delete EDT[ko]}save()}
+function gk(g){return(g.name||'').trim().toLowerCase()}
+function syncCol(src){var map={};if(src&&gk(src))map[gk(src)]=src.color;
+S.phases.forEach(function(P){P.groups.forEach(function(g){var k=gk(g);if(!k)return;if(!(k in map))map[k]=g.color;g.color=map[k]})})}
+function adoptCol(g){var k=gk(g);if(!k)return false;for(var i=0;i<S.phases.length;i++){var A=S.phases[i].groups;for(var j=0;j<A.length;j++){if(A[j]!==g&&gk(A[j])==k){g.color=A[j].color;return true}}}return false}
+function ob(){return{t:'',p:'',r:'',d:'',e:'',ok:false,dl:false,dd:''}}
+function inv(o){var P=ppl(o.p).map(ali),r=ali(o.r);if(r&&!P.some(function(n){return n.toLowerCase()==r.toLowerCase()}))P.push(r);return P}
+function overdue(o){return !!(!o.ok&&o.dl&&o.dd&&o.dd<today())}
+function dleft(o){return Math.round((Date.parse(o.dd)-Date.parse(today()))/864e5)}
+function urg(o){return !!(o.dl&&o.dd&&!o.ok&&dleft(o)<5)}
+function dlab(n){return n<0?'scaduta':n==0?'oggi':n==1?'domani':'tra '+n+' giorni'}
+function stato(o){return o.ok?'Completata':(o.d&&o.d<=today())?'In corso':'Da iniziare'}
+function scol(o){return o.ok?'var(--ac)':stato(o)=='In corso'?'var(--tx)':'var(--mut)'}
+function today(){var d=new Date();return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2)}
+function orow(i,j,o,st){var a='data-g="'+i+'" data-o="'+j+'"';
+return'<div class="frow'+(o.ok?' cmp':overdue(o)?' ovr':'')+'"><div class="w"><label>Obiettivo</label>'+(st?'<input '+a+' data-f="t" placeholder="Obiettivo o compito" value="'+esc(o.t)+'">':'<div class="v">'+(esc(o.t)||'<i class="badge">(senza titolo)</i>')+'</div>')+'</div>'
++'<div class="w"><label>Persone</label><input '+a+' data-f="p" placeholder="una o più, separate da virgola" value="'+esc(o.p)+'"></div>'
++'<div class="w"><label>Referente</label><input '+a+' data-f="r" placeholder="persona di riferimento" value="'+esc(o.r||'')+'"></div>'
++'<div><label>Stato</label><div class="v"><b style="color:'+scol(o)+'">'+stato(o)+'</b><label style="display:flex;gap:6px;align-items:center;color:var(--tx);font-size:13px;margin:2px 0 0"><input type="checkbox" style="width:auto" '+a+' data-f="ok"'+(o.ok?' checked':'')+'> Completato</label></div></div>'
++'<div><label>Data inizio</label><input type="date" '+a+' data-f="d" value="'+(o.d||'')+'"></div>'
++'<div><label>Data fine</label><div class="v">'+(o.e?fd(o.e):'<span class="badge">—</span>')+'</div></div>'
++'<div><label>Scadenza (facoltativa)</label><label class="v" style="display:flex;gap:6px;align-items:center;color:var(--tx);font-size:14px;margin:0;padding-bottom:2px"><input type="checkbox" style="width:auto" '+a+' data-f="dl"'+(o.dl?' checked':'')+'> Scadenza</label>'+(o.dl?'<input type="date" '+a+' data-f="dd" value="'+(o.dd||'')+'">':'')+'</div>'
++(st?'<div><button class="x" data-act="delo" data-g="'+i+'" data-o="'+j+'">Rimuovi</button></div>':'')+'</div>'}
+function ppl(s){return(s||'').split(/[,;\n]/).map(function(x){return x.trim()}).filter(Boolean)}
+function fixP(o){o.pool=o.pool||[];o.stage=o.stage||[];o.top=o.top||{dg:'',dt:'',pr:''};o.phases[0].groups.forEach(function(g){if(!g.obj){g.obj=[];var n=(g.slots||[]).map(function(x){return x.name.trim()}).filter(Boolean);g.obj.push(n.length?{t:'Da definire',p:n.join(', '),d:'',ok:false}:ob())}});return o}
+function fd(d){if(!d)return'';var p=d.split('-');return p[2]+'/'+p[1]+'/'+p[0]}
+function G(){return(S.phases[ph]||{groups:[]}).groups}
+function load(){try{return JSON.parse(RO?ROD.textContent:localStorage.getItem(K))}catch(e){return null}}
+function save(){if(RO)return;try{localStorage.setItem(K,JSON.stringify(S))}catch(e){}}
+function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function tm(t){var p=(t||'').split(':');return p.length<2?NaN:(+p[0])*60+(+p[1])}
+function fm(m){return Math.floor(m/60)+':'+('0'+m%60).slice(-2)}
+function newG(){var i=G().length;if(ph==0)return{name:'Gruppo '+(i+1),leader:'',color:PAL[i%PAL.length],obj:[ob()]};return{name:'Gruppo '+(i+1),leader:'',color:PAL[i%PAL.length],start:'08:00',end:'16:00',ls:'',le:'',slots:[{name:'',start:'',end:''}]}}
+function slot(){return{name:'',start:'',end:''}}
+function tabs(){var top=PH.map(function(n,i){return'<button data-act="ph" data-p="'+i+'" class="'+(ph==i?'on':'')+'">'+n+'</button>'}).join('')+'<button data-act="ph" data-p="3" class="'+(ph==3?'on':'')+'">Riepilogo persone</button>';
+if(ph==3){document.getElementById('tabs').innerHTML=top;return}
+document.getElementById('tabs').innerHTML=top+'<div style="flex-basis:100%;height:0"></div>'+(RO?(ph==0?[['s','Obiettivi'],['d','Per persona'],['c','Calendario']]:[['o','Organigramma'],['d','Diagramma']]):[['s','Settore'],['p','Persone'],['d',ph==0?'Per persona':'Diagramma']].concat(ph==0?[['c','Calendario']]:[['o','Organigramma']])).map(function(t){return'<button data-act="tab" data-t="'+t[0]+'" class="'+(tab==t[0]?'on':'')+'" style="'+(tab==t[0]?'':'background:transparent')+'">'+t[1]+'</button>'}).join('')}
+function viewS(){
+var o=ph==1?2:1,nt=NT;NT='';
+var h=(nt?'<p class="sub" style="color:var(--ac)">'+esc(nt)+'</p>':'')+'<div class="bar"><button data-act="cpy" data-m="s">Copia settori da '+PH[o]+'</button><button data-act="cpy" data-m="p">Copia settori e persone da '+PH[o]+'</button><button class="pri" data-act="addg">+ Nuovo gruppo di lavoro</button><button data-act="exp">Esporta dati</button><button data-act="imp">Importa dati</button><button class="x" data-act="reset"'+(CF=='reset'?' style="background:var(--warn);color:var(--bg)"':'')+'>'+(CF=='reset'?'Conferma: cancella tutto?':'Azzera tutto')+'</button></div>';
+if(!G().length)h+='<div class="empty">Nessun gruppo ancora. Aggiungi il primo (es. Partenza, Arrivo, Segreteria, Percorsi…).</div>';
+G().forEach(function(g,i){h+='<div class="card" style="--c:'+g.color+'"><div class="grid">'
++'<div style="grid-column:span 2"><label>Gruppo / campo d\'impiego</label><input data-g="'+i+'" data-f="name" value="'+esc(g.name)+'"></div>'
++'<div><label>Responsabile</label><input data-g="'+i+'" data-f="leader" value="'+esc(g.leader)+'" placeholder="nome o ruolo"></div>'
++'<div><label>N. persone (escl. resp.)</label><input type="number" min="0" max="80" data-g="'+i+'" data-f="n" value="'+g.slots.length+'"></div>'
++'<div><label>Inizio</label><input type="time" data-g="'+i+'" data-f="start" value="'+g.start+'"></div>'
++'<div><label>Fine</label><input type="time" data-g="'+i+'" data-f="end" value="'+g.end+'"></div>'
++'<div><label>Colore</label><input type="color" data-g="'+i+'" data-f="color" value="'+g.color+'"></div>'
++'<div style="display:flex;gap:6px;flex-wrap:wrap"><button data-act="gup" data-g="'+i+'" title="Sposta su"'+(i==0?' disabled':'')+'>▲</button><button data-act="gdn" data-g="'+i+'" title="Sposta giù"'+(i==G().length-1?' disabled':'')+'>▼</button><button class="x" data-act="delg" data-g="'+i+'"'+(CF=='g'+ph+':'+i?' style="background:var(--warn);color:var(--bg)"':'')+'>'+(CF=='g'+ph+':'+i?'Conferma?':'Elimina')+'</button></div></div></div>'});
+return h}
+function viewP(){
+if(!G().length)return'<div class="empty">Prima crea i gruppi nella scheda Settore.</div>';
+var h='<p class="sub">Inserisci i nomi. Gli orari lasciati vuoti seguono quelli del gruppo; compilali solo per chi ha un turno diverso.</p>';
+G().forEach(function(g,i){var f=g.slots.filter(function(x){return x.name.trim()}).length;
+h+='<div class="card" style="--c:'+g.color+'"><div class="hd"><b>'+esc(g.name)+'</b><span class="badge">'+g.start+'–'+g.end+' · coperti '+f+'/'+g.slots.length+'</span></div>'
++'<div class="row"><div><label>Responsabile</label><input data-g="'+i+'" data-f="leader" value="'+esc(g.leader)+'"></div><div><label>Dalle</label><input type="time" data-g="'+i+'" data-f="ls" value="'+g.ls+'"></div><div><label>Alle</label><input type="time" data-g="'+i+'" data-f="le" value="'+g.le+'"></div></div>';
+g.slots.forEach(function(x,j){h+='<div class="row"><input data-g="'+i+'" data-s="'+j+'" data-f="name" placeholder="Persona '+(j+1)+'" value="'+esc(x.name)+'"><input type="time" data-g="'+i+'" data-s="'+j+'" data-f="start" value="'+x.start+'"><input type="time" data-g="'+i+'" data-s="'+j+'" data-f="end" value="'+x.end+'"></div>'});
+h+='</div>'});return h}
+function entries(gs){var m={};gs.forEach(function(g){
+function add(n,s,e,r){n=ali(n);if(!n)return;var k=n.toLowerCase();s=tm(s||g.start);e=tm(e||g.end);if(isNaN(s)||isNaN(e)||e<=s)return;(m[k]=m[k]||{name:n,items:[]}).items.push({g:g,s:s,e:e,r:r})}
+add(g.leader,g.ls,g.le,'Responsabile');g.slots.forEach(function(x){add(x.name,x.start,x.end,'Addetto')})});
+return Object.keys(m).map(function(k){return m[k]}).sort(function(a,b){return a.name.localeCompare(b.name)})}
+function viewD(){var E=entries(G());if(!E.length)return'<div class="empty">Inserisci almeno un nome nella scheda Persone per vedere il diagramma.</div>';
+var mn=1440,mx=0;E.forEach(function(p){p.items.forEach(function(x){mn=Math.min(mn,x.s);mx=Math.max(mx,x.e)})});
+mn=Math.floor(mn/60)*60;mx=Math.ceil(mx/60)*60;var span=mx-mn,n=(mx-mn)/60,t='';
+for(var m=mn;m<=mx;m+=60)t+='<span style="left:'+(m-mn)/span*100+'%">'+m/60+'</span>';
+var h='<div class="scroll"><div class="tl"><div class="ax"><div></div><div class="ticks">'+t+'</div></div>';
+E.forEach(function(p){p.items.sort(function(a,b){return a.s-b.s});var tot=0,ov=false;
+p.items.forEach(function(x,i){tot+=x.e-x.s;if(i&&x.s<p.items[i-1].e)ov=true});
+h+='<div class="tr"><div class="nm"><b>'+esc(sh(p.name))+'</b><small>'+(tot/60).toFixed(1).replace('.0','')+' h'+(ov?' <span class="warn">⚠ sovrapposto</span>':'')+'</small></div><div class="trk" style="--n:'+n+'">';
+p.items.forEach(function(x){h+='<div class="seg" style="left:'+(x.s-mn)/span*100+'%;width:'+(x.e-x.s)/span*100+'%;background:'+x.g.color+'" title="'+esc(x.g.name+' ('+x.r+') '+fm(x.s)+'–'+fm(x.e))+'">'+esc(x.g.name)+' '+fm(x.s)+'–'+fm(x.e)+'</div>'});
+h+='</div></div>'});
+h+='</div></div><div class="leg">'+G().map(function(g){return'<span><i style="background:'+g.color+'"></i>'+esc(g.name)+'</span>'}).join('')+'</div>';return h}
+function viewS0(){var h='<div class="bar"><button class="pri" data-act="addg">+ Nuovo gruppo di lavoro</button><button data-act="exp">Esporta dati</button><button data-act="imp">Importa dati</button><button class="x" data-act="reset"'+(CF=='reset'?' style="background:var(--warn);color:var(--bg)"':'')+'>'+(CF=='reset'?'Conferma: cancella tutto?':'Azzera tutto')+'</button></div>';
+if(!G().length)h+='<div class="empty">Nessun gruppo ancora. Aggiungi il primo.</div>';
+G().forEach(function(g,i){h+='<div class="card" style="--c:'+g.color+'"><div class="grid"><div style="grid-column:span 2"><label>Gruppo di lavoro</label><input data-g="'+i+'" data-f="name" value="'+esc(g.name)+'"></div><div><label>Responsabile</label><input data-g="'+i+'" data-f="leader" value="'+esc(g.leader)+'" placeholder="nome o ruolo"></div><div><label>Colore</label><input type="color" data-g="'+i+'" data-f="color" value="'+g.color+'"></div><div><button class="x" data-act="delg" data-g="'+i+'"'+(CF=='g'+ph+':'+i?' style="background:var(--warn);color:var(--bg)"':'')+'>'+(CF=='g'+ph+':'+i?'Conferma?':'Elimina')+'</button></div></div><label style="margin-top:12px">Obiettivi / compiti</label>';
+g.obj.forEach(function(o,j){h+=orow(i,j,o,true)});
+h+='<button data-act="addo" data-g="'+i+'" style="margin-top:8px">+ Aggiungi obiettivo</button></div>'});return h}
+function viewP0(){if(!G().length)return'<div class="empty">Prima crea i gruppi nella scheda Settore.</div>';
+var h='<p class="sub">Per ogni obiettivo scrivi le persone incaricate (separate da virgola). Spuntando Stato la data di fine si imposta automaticamente a oggi.</p>';
+G().forEach(function(g,i){var a=g.obj.filter(function(o){return ppl(o.p).length}).length;
+h+='<div class="card" style="--c:'+g.color+'"><div class="hd"><b>'+esc(g.name)+'</b><span class="badge">assegnati '+a+'/'+g.obj.length+'</span></div><label>Responsabile</label><input data-g="'+i+'" data-f="leader" value="'+esc(g.leader)+'">';
+g.obj.forEach(function(o,j){h+=orow(i,j,o,false)});
+h+='</div>'});return h}
+function viewD0(){var m={},un=[];G().forEach(function(g){var L=ali(g.leader);if(L){var k=L.toLowerCase();(m[k]=m[k]||{name:L,r:[],o:[]}).r.push(g)}
+g.obj.forEach(function(o){if(!(o.t||'').trim())return;var P=inv(o),rf=ali(o.r).toLowerCase();if(!P.length)un.push({g:g,o:o});P.forEach(function(n){var k=n.toLowerCase();(m[k]=m[k]||{name:n,r:[],o:[]}).o.push({g:g,o:o,ref:k==rf})})})});
+var L=Object.keys(m).map(function(k){return m[k]}).sort(function(a,b){return a.name.localeCompare(b.name)});
+function li(x){return'<div class="ob'+(x.o.ok?' cmp':overdue(x.o)?' ovr':'')+'"><i style="background:'+x.g.color+'"></i><span class="'+(x.o.ok?'done':'')+'">'+esc(x.o.t)+' <span class="badge">· '+esc(x.g.name)+' · '+stato(x.o).toLowerCase()+(x.ref?' · <b>referente</b>':x.o.r?' · referente: '+esc(sh(x.o.r)):'')+(x.o.d?' · dal '+fd(x.o.d):'')+(x.o.e?' al '+fd(x.o.e):'')+(x.o.dl&&x.o.dd?' · scade '+fd(x.o.dd):'')+'</span></span></div>'}
+if(!L.length&&!un.length)return'<div class="empty">Inserisci obiettivi e persone per vedere il riepilogo.</div>';
+var h='';L.forEach(function(p){var d=p.o.filter(function(x){return x.o.ok}).length;
+h+='<div class="card" style="--c:var(--ac)"><div class="hd"><b>'+esc(sh(p.name))+'</b><span class="badge">'+p.o.length+' obiettiv'+(p.o.length==1?'o':'i')+(p.o.length?' · '+d+' fatti':'')+'</span></div>'
++(p.r.length?'<div class="badge">Responsabile di: '+p.r.map(function(g){return esc(g.name)}).join(', ')+'</div>':'')+p.o.map(li).join('')+'</div>'});
+if(un.length)h+='<div class="card" style="--c:var(--warn)"><div class="hd"><b>Obiettivi senza persona assegnata</b><span class="badge">'+un.length+'</span></div>'+un.map(li).join('')+'</div>';
+return h}
+var cal=null,selDay='',fS=true,fD=true;
+function cl(x,k){var u=urg(x.o);return'<div class="ob'+(x.o.ok?' cmp':overdue(x.o)?' ovr':'')+'"><i style="background:'+x.g.color+'"></i><span class="'+(x.o.ok?'done':'')+'"'+(k=='dl'&&u?' style="color:var(--warn)"':'')+'>'+(k=='st'?'<b>'+fd(x.o.d).slice(0,5)+'</b> ':k=='dl'?'<b>'+fd(x.o.dd).slice(0,5)+'</b> ':'')+esc(x.o.t)+' <span class="badge">· '+esc(x.g.name)+(x.o.p?' · '+esc(ppl(x.o.p).map(sh).join(', ')):' · nessuna persona')+(x.o.r?' · referente '+esc(sh(x.o.r)):'')+' · '+stato(x.o).toLowerCase()+(k=='dl'?' · '+dlab(dleft(x.o)):(x.o.d?' · dal '+fd(x.o.d):'')+(x.o.dl&&x.o.dd?' · scade '+fd(x.o.dd):''))+'</span></span></div>'}
+function viewC(){if(!cal){var n=new Date();cal={y:n.getFullYear(),m:n.getMonth()}}
+var T=today(),by={},dl={},all=[],dls=[];
+G().forEach(function(g){g.obj.forEach(function(o){if(!(o.t||'').trim())return;var x={g:g,o:o};if(o.d&&fS){(by[o.d]=by[o.d]||[]).push(x);all.push(x)}if(o.dl&&o.dd&&fD){(dl[o.dd]=dl[o.dd]||[]).push(x);dls.push(x)}})});
+var first=(new Date(cal.y,cal.m,1).getDay()+6)%7,nd=new Date(cal.y,cal.m+1,0).getDate();
+var h='<div class="bar" style="align-items:center"><button data-act="cm" data-d="-1">‹</button><b style="min-width:150px;text-align:center;text-transform:capitalize">'+new Date(cal.y,cal.m,1).toLocaleDateString('it-IT',{month:'long',year:'numeric'})+'</b><button data-act="cm" data-d="1">›</button><button data-act="cm" data-d="0">Oggi</button></div>';
+h+='<div class="bar" style="font-size:14px"><span class="badge" style="align-self:center">Mostra:</span><label style="display:flex;gap:6px;align-items:center;color:var(--tx);font-size:14px;margin:0"><input type="checkbox" style="width:auto" data-act="cf" data-k="s"'+(fS?' checked':'')+'> Appuntamenti (inizio attività)</label><label style="display:flex;gap:6px;align-items:center;color:var(--tx);font-size:14px;margin:0"><input type="checkbox" style="width:auto" data-act="cf" data-k="d"'+(fD?' checked':'')+'> Scadenze</label></div>';
+h+='<p class="sub">Verde: inizio di attività future · rosso chiaro: giorno di scadenza · rosso acceso: scadenza entro 5 giorni (o già superata) di un\'attività non completata. ● inizio, ■ scadenza. Clicca un giorno per i dettagli.</p><div class="cal">'+['Lun','Mar','Mer','Gio','Ven','Sab','Dom'].map(function(d){return'<div class="wd">'+d+'</div>'}).join('');
+for(var i=0;i<first;i++)h+='<div></div>';
+for(var d=1;d<=nd;d++){var iso=cal.y+'-'+('0'+(cal.m+1)).slice(-2)+'-'+('0'+d).slice(-2),L=by[iso]||[],E=dl[iso]||[],fu=iso>T&&L.length>0;
+h+='<button class="cd'+(E.length?(E.some(function(x){return urg(x.o)})?' du':' dl'):fu?' fu':L.length?' pa':'')+(iso==T?' td':'')+(iso==selDay?' sel':'')+'" data-act="cd" data-day="'+iso+'"><span>'+d+'</span><span class="ds">'+L.slice(0,3).map(function(x){return'<i style="background:'+x.g.color+'"></i>'}).join('')+E.slice(0,3).map(function(x){return'<i style="background:'+x.g.color+';border-radius:2px"></i>'}).join('')+(L.length+E.length>6?'+':'')+'</span></button>'}
+h+='</div>';
+if(selDay){var D=by[selDay]||[],F=dl[selDay]||[];h+='<div class="card" style="--c:var(--ac)"><div class="hd"><b>'+fd(selDay)+'</b><span class="badge">'+D.length+' in partenza · '+F.length+' in scadenza</span></div>'
++(D.length?'<div class="badge">Iniziano</div>'+D.map(function(x){return cl(x,'')}).join(''):'')+(F.length?'<div class="badge" style="margin-top:6px">Scadono</div>'+F.map(function(x){return cl(x,'')}).join(''):'')+(D.length+F.length?'':'<span class="badge">Nessuna attività in questo giorno.</span>')+'</div>'}
+var F2=dls.filter(function(x){return !x.o.ok&&x.o.dd>=T}).sort(function(a,b){return a.o.dd<b.o.dd?-1:a.o.dd>b.o.dd?1:0}).slice(0,15);
+var OV=dls.filter(function(x){return !x.o.ok&&x.o.dd<T});
+if(fD)h+='<div class="card" style="--c:#e5484d"><div class="hd"><b>Scadenze</b><span class="badge">'+(F2.length+OV.length)+' non completate</span></div>'+(OV.concat(F2).map(function(x){return cl(x,'dl')}).join('')||'<span class="badge">Nessuna scadenza impostata.</span>')+'</div>';
+var U=all.filter(function(x){return x.o.d>T}).sort(function(a,b){return a.o.d<b.o.d?-1:a.o.d>b.o.d?1:0}).slice(0,15);
+if(fS)h+='<div class="card" style="--c:var(--mut)"><div class="hd"><b>Prossime attività da iniziare</b><span class="badge">'+U.length+'</span></div>'+(U.length?U.map(function(x){return cl(x,'st')}).join(''):'<span class="badge">Nessuna attività con data di inizio futura.</span>')+'</div>';
+return h}
+function blk(n){n=(n||'').toLowerCase();var rx=[/pre[\s-]?evento|\bpre\b/,/giorno\s*1(?!\d)|\bg1\b|primo giorno|1°\s*giorno/,/giorno\s*2(?!\d)|\bg2\b|secondo giorno|2°\s*giorno/];
+var hit=rx.map(function(r){return r.test(n)});if(!hit.some(Boolean))return[false,false,false];
+if(/\b(non|no|tranne|escluso|esclusi|senza)\b/.test(n))return hit;
+if(/\bsolo\b/.test(n))return hit.map(function(x){return!x});return[false,false,false]}
+function viewO(){var gs=G(),T=S.top||{},R=[['dg','Direttore di Gara'],['dt','Delegato Tecnico'],['pr','Presidente']];
+var h=RO?'':'<div class="card" style="--c:var(--ac)"><div class="hd"><b>Vertici della manifestazione</b><span class="badge">uguali per Giorno 1 e Giorno 2</span></div><div class="grid">'+R.map(function(r){return'<div><label>'+r[1]+'</label><input data-top="'+r[0]+'" value="'+esc(T[r[0]])+'" placeholder="Nome"></div>'}).join('')+'</div></div>';
+if(!gs.length)return h+'<div class="empty">'+(RO?'Nessun settore definito.':'Crea prima i settori nella scheda Settore.')+'</div>';
+h+='<div class="scroll"><div class="tree"><div class="trow">'+R.map(function(r){return'<div class="bx top"><small>'+r[1]+'</small><b data-tn="'+r[0]+'">'+(esc(sh(T[r[0]]))||'da definire')+'</b></div>'}).join('')+'</div><div class="stem"></div><div class="srow">'
++gs.map(function(g){return'<div class="col"><div class="bx" style="border-top:4px solid '+g.color+'"><small>'+esc(g.name)+' · responsabile</small><b>'+(esc(sh(g.leader))||'<span class="badge">da definire</span>')+'</b></div>'
++g.slots.map(function(x){var n=(x.name||'').trim();return'<div class="sw"><div class="bx'+(n?'':' em')+'">'+(n?esc(sh(n))+'<small>'+(x.start||g.start)+'–'+(x.end||g.end)+'</small>':'<small>posto libero</small>')+'</div></div>'}).join('')+'</div>'}).join('')+'</div></div></div>';
+return h}
+
+function cbx(at,f,on,lab){return'<label style="display:flex;gap:6px;align-items:center;color:var(--tx);font-size:13px;margin:0"><input type="checkbox" style="width:auto" '+at+' data-f="'+f+'"'+(on?' checked':'')+'> '+lab+'</label>'}
+function collect(){var m={};
+S.phases.forEach(function(P,i){
+if(i==0){P.groups.forEach(function(g){function ad(n,c,tk,dn){n=ali(n);if(!n)return;var k=n.toLowerCase();var o=m[k]=m[k]||{name:n,t:[0,0,0],g:[[],[],[]],n:0,tk:[]};o.n=(o.n||0)+c;if(o.g[0].indexOf(g.name)<0)o.g[0].push(g.name);if(tk){o.tk=o.tk||[];if(o.tk.indexOf(tk)<0)o.tk.push(tk)}if(dn)o.dn=(o.dn||0)+1}ad(g.leader,0);g.obj.forEach(function(x){if(!(x.t||'').trim())return;inv(x).forEach(function(n){if(x.ok)ad(n,0,'',1);else ad(n,1,(x.t||'').trim())})})});return}
+entries(P.groups).forEach(function(p){var k=p.name.toLowerCase();var o=m[k]=m[k]||{name:p.name,t:[0,0,0],g:[[],[],[]],n:0};p.items.forEach(function(x){o.t[i]+=x.e-x.s;if(o.g[i].indexOf(x.g.name)<0)o.g[i].push(x.g.name)})})});
+var AS={};Object.keys(m).forEach(function(k){AS[k]=1});
+(S.pool||[]).forEach(function(q){var k=q.name.toLowerCase();if(!m[k]&&!RO)m[k]={name:q.name,t:[0,0,0],g:[[],[],[]],n:0}});
+var BK={},PQ={};(S.pool||[]).forEach(function(q){if(RO)return;var k=q.name.toLowerCase(),b=blk(q.note);b[1]=b[1]||!!q.n1;b[2]=b[2]||!!q.n2;BK[k]=b;PQ[k]=q});
+var L=Object.keys(m).map(function(k){return m[k]}).sort(function(a,b){return a.name.localeCompare(b.name)});
+return{L:L,AS:AS,BK:BK,PQ:PQ}}
+function stg(){var T=S.stage||[],P=S.pool||[];
+var h='<div class="card" style="--c:var(--ac)"><div class="hd"><b>1 · Importa o aggiungi persone</b></div><label>Aggiunta manuale</label><div class="grid"><div><input id="pn" placeholder="Nome e cognome"></div><div><input id="pa" placeholder="Nome breve (facoltativo)"></div><div><input id="pt" placeholder="Nota (es. solo Giorno 1)"></div><div><button class="pri" data-act="padd">Aggiungi</button></div></div>'
++'<div style="margin-top:12px"><label>Importa da Excel · colonne: Cognome, Nome, Giorno 1, Giorno 2, numero di telefono, email · cella vuota o SI = disponibile, NO = non c\'è</label><input type="file" id="xf" accept=".xlsx,.xls,.csv"></div>';
+if(T.length){h+='<div class="hd" style="margin-top:12px"><b>Anteprima ('+T.length+')</b><span style="display:flex;gap:6px"><button class="pri" data-act="simall">Importa tutte</button><button data-act="sclr">Svuota anteprima</button></span></div>'
++T.map(function(r,i){var at='data-si="'+i+'"',ex=P.some(function(q){return q.name.toLowerCase()==r.name.toLowerCase()});
+return'<div class="frow"><div class="w"><b>'+esc(r.name)+'</b> <span class="badge">· '+(ex?'già presente: verrà aggiornata':'nuova')+'</span></div><div><label>Nome breve</label><input '+at+' data-f="alias" value="'+esc(r.alias)+'" placeholder="es. Alessio"></div><div><label>Telefono</label><input '+at+' data-f="phone" value="'+esc(r.phone)+'"></div><div><label>Email</label><input '+at+' data-f="email" value="'+esc(r.email)+'"></div><div><label>Disponibile</label><div class="v">'+cbx(at,'n1',!r.n1,'Giorno 1')+cbx(at,'n2',!r.n2,'Giorno 2')+'</div></div><div><button class="pri" data-act="sim" data-i="'+i+'">Importa</button></div></div>'}).join('')}
+return h+'</div>'}
+function ptbl(C){var P=S.pool||[],vis=P.map(function(q,i){return{q:q,i:i}}).filter(function(x){return !C.AS[x.q.name.toLowerCase()]}),hid=P.length-vis.length,h;
+if(!vis.length)h='<div class="empty">'+(P.length?'Tutte le persone inserite sono già assegnate.':'Nessuna persona ancora: importale dal file o aggiungile a mano.')+'</div>';
+else{h='<div class="scroll"><table class="tb" style="width:100%;border-collapse:collapse;font-size:13px"><tr><th></th><th>Persona</th><th>Giorno 1</th><th>Giorno 2</th></tr>';
+vis.forEach(function(x){var q=x.q,i=x.i,b=blk(q.note);b[1]=b[1]||!!q.n1;b[2]=b[2]||!!q.n2;var open=EX['p:'+i],at='data-pi="'+i+'"';
+function dy(z){return z?'<b class="warn">✕</b>':'<b style="color:var(--ac)">✓</b>'}
+h+='<tr><td><button class="tg" data-act="tg" data-k="p:'+i+'" title="Mostra/nascondi dettagli">'+(open?'▾':'▸')+'</button></td><td><b>'+esc(q.name)+'</b>'+(q.alias?'<small class="badge" style="display:block">'+esc(q.alias)+'</small>':'')+'</td><td>'+dy(b[1])+'</td><td>'+dy(b[2])+'</td></tr>';
+if(open)h+='<tr><td></td><td colspan="3"><div class="frow" style="border-top:0;margin-top:0;padding-top:0"><div class="w"><label>Nome e cognome</label><input '+at+' data-f="name" value="'+esc(q.name)+'"></div><div><label>Nome breve</label><input '+at+' data-f="alias" value="'+esc(q.alias||'')+'" placeholder="es. Alessio"></div><div><label>Telefono</label><input '+at+' data-f="phone" value="'+esc(q.phone||'')+'"></div><div><label>Email</label><input '+at+' data-f="email" value="'+esc(q.email||'')+'"></div><div class="w"><label>Nota</label><input '+at+' data-f="note" value="'+esc(q.note||'')+'" placeholder="es. solo Giorno 1"></div><div><label>Disponibile</label><div class="v">'+cbx(at,'n1',!q.n1,'Giorno 1')+cbx(at,'n2',!q.n2,'Giorno 2')+'</div></div><div><button class="x" data-act="pdel" data-i="'+i+'">Rimuovi</button></div></div></td></tr>'});
+h+='</table></div>'}
+return h+(hid?'<div class="badge" style="margin-top:6px">'+hid+(hid==1?' persona già assegnata non è più':' persone già assegnate non sono più')+' in questo elenco: '+(hid==1?'la trovi':'le trovi')+' nel Riepilogo (blocco 3).</div>':'')}
+function tbl(C){C=C||collect();var L=C.L;if(!L.length)return'<div class="empty">Nessuna persona inserita nelle tre fasi.</div>';
+var h='<div class="scroll"><table class="tb" style="width:100%;border-collapse:collapse;font-size:13px"><tr><th></th><th>Persona</th>'+PH.map(function(n){return'<th>'+n+'</th>'}).join('')+'<th>Tot. ore</th></tr>';
+L.forEach(function(o){var k=o.name.toLowerCase(),tot=o.t[0]+o.t[1]+o.t[2],q=C.PQ[k],bk=C.BK[k],open=EX['r:'+k],asg=o.g[0].length+o.g[1].length+o.g[2].length;
+h+='<tr><td><button class="tg" data-act="tg" data-k="r:'+esc(k)+'"'+(q?' data-pi="'+S.pool.indexOf(q)+'"':'')+' title="Mostra/nascondi contatti">'+(open?'▾':'▸')+'</button></td><td><b>'+esc(o.name)+'</b>'+(q&&q.note?'<br><small class="badge">'+esc(q.note)+'</small>':'')+(asg?'':'<br><small class="warn">disponibile, non ancora assegnata</small>')+(bk&&bk.some(function(x,i){return x&&(i==0?o.g[0].length:o.t[i])})?'<br><small class="warn">⚠ assegnata in una fase indicata come non disponibile</small>':'')+'</td>'
++o.t.map(function(v,i){if(bk&&bk[i]&&!(i==0?o.g[0].length:v))return'<td><b class="warn" title="Non disponibile">✕</b></td>';
+if(i==0)return'<td>'+(o.g[0].length?(o.n?o.n+' obiettiv'+(o.n==1?'o':'i'):o.dn?'tutti completati':'resp.')+'<br><small class="badge">'+esc((o.tk&&o.tk.length?o.tk:o.g[0]).join(', '))+'</small>':'<span class="badge">–</span>')+'</td>';
+return'<td>'+(v?(v/60).toFixed(1).replace('.0','')+' h<br><small class="badge">'+esc(o.g[i].join(', '))+'</small>':'<span class="badge">–</span>')+'</td>'}).join('')+'<td>'+(tot/60).toFixed(1).replace('.0','')+'</td></tr>';
+if(open){var ed=EDT[k]&&q,pb='<button class="tg" data-act="ed" data-k="'+esc(k)+'"'+(q?' data-pi="'+S.pool.indexOf(q)+'"':'')+' title="'+(ed?'Chiudi modifica':'Modifica dati personali')+'">'+(ed?'✓ Fatto':'✎')+'</button>';
+if(ed){var a2='data-pi="'+S.pool.indexOf(q)+'" data-b3="1"';h+='<tr><td></td><td colspan="5"><div class="frow" style="border-top:0;margin-top:0;padding-top:0"><div class="w"><label>Nome e cognome</label><input '+a2+' data-f="name" value="'+esc(q.name)+'"></div><div><label>Nome breve</label><input '+a2+' data-f="alias" value="'+esc(q.alias||'')+'" placeholder="es. Alessio"></div><div><label>Telefono</label><input '+a2+' data-f="phone" value="'+esc(q.phone||'')+'"></div><div><label>Email</label><input '+a2+' data-f="email" value="'+esc(q.email||'')+'"></div><div class="w"><label>Nota</label><input '+a2+' data-f="note" value="'+esc(q.note||'')+'" placeholder="es. solo Giorno 1"></div><div><label>Disponibile</label><div class="v">'+cbx(a2,'n1',!q.n1,'Giorno 1')+cbx(a2,'n2',!q.n2,'Giorno 2')+'</div></div><div class="v">'+pb+'</div></div></td></tr>'}
+else h+='<tr><td></td><td colspan="5" style="color:var(--mut)">'+(q?'Telefono: <b style="color:var(--tx)">'+(esc(q.phone)||'—')+'</b> · Email: <b style="color:var(--tx)">'+(esc(q.email)||'—')+'</b>'+(q.alias?' · Nome breve: <b style="color:var(--tx)">'+esc(q.alias)+'</b>':''):'Nessun dato di contatto per questa persona.')+' '+pb+'</td></tr>'}});
+h+='</table></div>';return RO?h.replace(/<button class="tg"[^>]*>[^<]*<\/button>/g,''):h}
+function roHtml(){var D=JSON.parse(JSON.stringify(S));
+D.pool=(D.pool||[]).map(function(q){return{name:q.name,alias:q.alias||'',note:'',phone:'',email:'',n1:false,n2:false}});D.stage=[];
+D.gen=new Date().toLocaleString('it-IT',{dateStyle:'short',timeStyle:'short'});
+var m=document.querySelector('main').cloneNode(true);m.querySelector('#app').innerHTML='';m.querySelector('#tabs').innerHTML='';
+var a=m.querySelector('#genbar'),b=m.querySelector('#genout');if(a)a.remove();if(b)b.remove();
+return'<!DOCTYPE html>\n<html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Organigramma gara di orienteering</title><style>'+document.querySelector('style').textContent+'</style></head><body>'+m.outerHTML+'<script id="roData" type="application/json">'+JSON.stringify(D).replace(/</g,'\\u003c')+'<\/script><script id="appjs">'+document.getElementById('appjs').textContent+'<\/script></body></html>'}
+async function genRO(){var box=document.getElementById('genout'),html=roHtml();
+function ok(t){box.innerHTML='<div class="card" style="--c:var(--ac)">'+t+'</div>'}
+try{var d=window.claude&&await claude.use('downloads');if(d){await d.save({filename:'organigramma-gara-sola-lettura.html',data:html});ok('<b>File creato.</b> Caricalo su un servizio di pubblicazione (ad esempio Netlify Drop, GitHub Pages o il tuo sito) e condividi il link: chi lo apre vede l\'organizzazione senza poter modificare nulla. Telefoni ed email dei volontari e le persone non ancora assegnate non sono inclusi.');return}}catch(e){if(e&&e.code=='declined'){ok('Salvataggio annullato.');return}}
+box.innerHTML='<div class="card" style="--c:var(--ac)"><b>Copia di sola lettura</b><p class="sub">Il salvataggio diretto non è disponibile in questa vista. Seleziona tutto il testo qui sotto, copialo in un file di testo chiamato <b>organigramma.html</b> e caricalo sul tuo sito.</p><textarea readonly style="width:100%;height:160px;font:12px monospace" onfocus="this.select()">'+esc(html)+'</textarea></div>'}
+function viewOB(){var gs=G();if(!gs.length)return'<div class="empty">Nessun gruppo di lavoro.</div>';
+return gs.map(function(g){var O=g.obj.filter(function(o){return(o.t||'').trim()});
+return'<div class="card" style="--c:'+g.color+'"><div class="hd"><b>'+esc(g.name)+'</b><span class="badge">'+(g.leader?'Responsabile: '+esc(sh(g.leader)):'')+'</span></div>'+(O.length?O.map(function(o){return cl({g:g,o:o},'')}).join(''):'<span class="badge">Nessun obiettivo.</span>')+'</div>'}).join('')}
+function viewR(){if(RO)return'<div class="hd" style="margin:4px 2px 8px"><b>Riepilogo persone</b></div>'+tbl(collect());var C=collect(),mg=MSG;MSG='';
+return(mg?'<p class="warn">'+esc(mg)+'</p>':'')+stg()+'<div class="card" style="--c:var(--ac)"><div class="hd"><b>2 · Persone disponibili da assegnare</b><span class="badge">'+(S.pool||[]).filter(function(q){return !C.AS[q.name.toLowerCase()]}).length+'</span></div>'+ptbl(C)+'<p class="sub" style="margin:8px 0 0">Per assegnarle scrivi il loro nome (o il nome breve) negli obiettivi o nei posti dei settori. Apri la freccia ▸ per modificare nome breve, contatti, nota e disponibilità. Con una nota come «solo Giorno 1» nelle altre fasi compare una ✕.</p></div><div class="hd" style="margin:16px 2px 8px"><b>3 · Riepilogo persone</b></div><div id="blk3">'+tbl(C)+'</div>'}
+function render(){syncCol();if(RO){if(ph==0){if(['s','d','c'].indexOf(tab)<0)tab='s'}else if(ph<3&&['o','d'].indexOf(tab)<0)tab='o'}tabs();document.getElementById('app').innerHTML=ph==3?viewR():ph==0?(tab=='s'?(RO?viewOB():viewS0()):tab=='p'?viewP0():tab=='c'?viewC():viewD0()):tab=='s'?viewS():tab=='p'?viewP():tab=='o'?viewO():viewD()}
+var app=document.getElementById('app');
+app.addEventListener('input',function(e){var t=e.target,g=G()[t.dataset.g];if(t.dataset.si!==undefined){var rr=S.stage[+t.dataset.si];if(rr){if(t.type=='checkbox')rr[t.dataset.f]=!t.checked;else rr[t.dataset.f]=t.value;save()}return}if(t.dataset.pi!==undefined){var qq=S.pool[+t.dataset.pi];if(qq&&t.dataset.f!='name'){if(t.type=='checkbox')qq[t.dataset.f]=!t.checked;else qq[t.dataset.f]=t.value;save();var e3=document.getElementById('blk3');if(e3&&!t.dataset.b3)e3.innerHTML=tbl()}return}if(t.dataset.top){S.top[t.dataset.top]=t.value;save();document.querySelectorAll('[data-tn="'+t.dataset.top+'"]').forEach(function(el){el.textContent=sh(t.value)||'da definire'});return}if(!g||t.dataset.f=='n')return;
+var v=t.type=='checkbox'?t.checked:t.value;if(t.dataset.o!==undefined)g.obj[+t.dataset.o][t.dataset.f]=v;else if(t.dataset.s!==undefined)g.slots[+t.dataset.s][t.dataset.f]=v;else g[t.dataset.f]=v;if(t.dataset.f=='color')syncCol(g);save();if(t.dataset.o!==undefined&&t.dataset.f=='d'){var q=g.obj[+t.dataset.o],r=t.closest('.frow'),bb=r&&r.querySelector('b');if(bb){bb.textContent=stato(q);bb.style.color=scol(q)}}});
+app.addEventListener('change',function(e){var t=e.target,g=G()[t.dataset.g];if(t.id=='xf'){impX(t.files&&t.files[0]);t.value='';return}if(t.dataset.pi!==undefined&&t.dataset.f=='name'){commitName(t);setTimeout(render,200);return}if(t.dataset.pi!==undefined&&t.type=='checkbox'){render();return}if(g&&t.dataset.o!==undefined&&t.dataset.f=='ok'){var q=g.obj[+t.dataset.o];q.ok=t.checked;q.e=q.ok?today():'';save();render();return}if(g&&t.dataset.o!==undefined&&t.dataset.f=='d'){return}if(g&&t.dataset.o!==undefined&&t.dataset.f=='dl'){var z=g.obj[+t.dataset.o];z.dl=t.checked;if(!z.dl)z.dd='';save();render();return}if(g&&t.dataset.f=='name'&&t.dataset.o===undefined&&t.dataset.s===undefined){if(adoptCol(g)){save();var cd=t.closest&&t.closest('.card');if(cd){cd.style.setProperty('--c',g.color);var ci=cd.querySelector('input[type=color]');if(ci)ci.value=g.color}}return}if(!g||t.dataset.f!='n')return;
+var n=Math.max(0,Math.min(80,parseInt(t.value)||0));
+if(n<g.slots.length&&g.slots.slice(n).some(function(x){return x.name.trim()})){t.value=g.slots.length;toast('Nei posti da togliere ci sono già dei nomi: svuotali prima nella scheda Persone.');return}
+while(g.slots.length<n)g.slots.push(slot());g.slots.length=n;save();render()});
+document.addEventListener('click',function(e){var b=e.target.closest('[data-act]');if(!b)return;var a=b.dataset.act;if(a!='delg'&&a!='reset')CF='';
+if(a=='tab'){tab=b.dataset.t}
+else if(a=='ph'){ph=+b.dataset.p;if(ph!=0&&tab=='c')tab='d';if(ph==0&&tab=='o')tab='s'}
+else if(a=='cm'){var dd=+b.dataset.d;if(!dd||!cal)cal=null;else{cal.m+=dd;if(cal.m<0){cal.m=11;cal.y--}if(cal.m>11){cal.m=0;cal.y++}}}
+else if(a=='cf'){if(b.dataset.k=='s')fS=!fS;else fD=!fD}
+else if(a=='padd'){var pn=document.getElementById('pn'),pt=document.getElementById('pt'),pa=document.getElementById('pa'),nm=pn.value.trim();if(!nm)return;S.pool=S.pool||[];var ex=S.pool.filter(function(q){return q.name.toLowerCase()==nm.toLowerCase()})[0];if(ex){ex.note=pt.value.trim();if(pa.value.trim())ex.alias=pa.value.trim()}else S.pool.push({name:nm,note:pt.value.trim(),phone:'',email:'',n1:false,n2:false,alias:pa.value.trim()})}
+else if(a=='sim'){var si=+b.dataset.i;impRow(S.stage[si]);S.stage.splice(si,1)}
+else if(a=='simall'){S.stage.forEach(impRow);S.stage=[]}
+else if(a=='sclr'){S.stage=[]}
+else if(a=='ed'){var ek=b.dataset.pi!==undefined&&S.pool[+b.dataset.pi]?S.pool[+b.dataset.pi].name.toLowerCase():b.dataset.k;S.pool=S.pool||[];if(!S.pool.some(function(q){return q.name.toLowerCase()==ek})){var px=collect().L.filter(function(o){return o.name.toLowerCase()==ek})[0];if(px)S.pool.push({name:px.name,note:'',phone:'',email:'',n1:false,n2:false,alias:''})}EDT[ek]=!EDT[ek]}
+else if(a=='gen'){genRO();return}
+else if(a=='cpy'){cpyG(b.dataset.m)}
+else if(a=='tg'){var kk=b.dataset.k;if(b.dataset.pi!==undefined&&kk.indexOf('r:')==0&&S.pool[+b.dataset.pi])kk='r:'+S.pool[+b.dataset.pi].name.toLowerCase();EX[kk]=!EX[kk]}
+else if(a=='pdel'){S.pool.splice(+b.dataset.i,1)}
+else if(a=='gup'||a=='gdn'){var gi=+b.dataset.g,gj=a=='gup'?gi-1:gi+1,GL=G();if(gj<0||gj>=GL.length)return;var tmp=GL[gi];GL[gi]=GL[gj];GL[gj]=tmp}
+else if(a=='cd'){selDay=selDay==b.dataset.day?'':b.dataset.day}
+else if(a=='addo'){G()[+b.dataset.g].obj.push(ob())}
+else if(a=='delo'){G()[+b.dataset.g].obj.splice(+b.dataset.o,1)}
+else if(a=='addg'){G().push(newG())}
+else if(a=='delg'){var dk='g'+ph+':'+b.dataset.g;if(CF!=dk){CF=dk;render();return}CF='';G().splice(+b.dataset.g,1)}
+else if(a=='reset'){if(CF!='reset'){CF='reset';render();return}CF='';S=migr(null)}
+else if(a=='exp'){expData();return}
+else if(a=='imp'){var jf=document.getElementById('jf');if(jf)jf.click();return}
+save();render()});
+document.addEventListener('change',function(e){if(e.target&&e.target.id=='jf'){impJ(e.target.files&&e.target.files[0]);e.target.value=''}});
+app.addEventListener('keydown',function(e){if(e.key=='Enter'&&e.target.dataset&&e.target.dataset.pi!==undefined){if(e.target.dataset.f=='name')commitName(e.target);render();return}if(e.key=='Enter'&&(e.target.id=='pn'||e.target.id=='pt'||e.target.id=='pa')){var b=document.querySelector('[data-act="padd"]');if(b)b.click()}});
+if(RO){var gb=document.getElementById('genbar');if(gb)gb.style.display='none';var sb=document.getElementById('sub');if(sb)sb.textContent='Vista di sola lettura · aggiornata al '+(S.gen||'')}
+render();
+</script>
+</body>
+</html>
